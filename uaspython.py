@@ -81,4 +81,42 @@ elif menu == "3":
     else:
         st.info("Belum ada barang dalam daftar.")
 
+elif menu == "4":
+    st.subheader("✏️ Edit Barang")
+    if st.session_state.data_barang:
+        pilihan = st.selectbox(
+            "Pilih barang yang akan diedit",
+            [f"{i+1}. {b.nama}" for i, b in enumerate(st.session_state.data_barang)],
+            key='edit_select'
+        )
+        
+        if pilihan:
+            index = int(pilihan.split('.')[0]) - 1
+            barang = st.session_state.data_barang[index]
+            
+            with st.form(key='edit_form'):
+                st.write("### Data Barang Saat Ini:")
+                st.write(barang)
+                st.write("### Masukkan Data Baru:")
+                
+                nama_baru = st.text_input("Nama Baru", value=barang.nama)
+                col1, col2 = st.columns(2)
+                with col1:
+                    harga_baru = st.number_input("Harga Baru", value=barang.harga, min_value=0, step=1000)
+                with col2:
+                    jumlah_baru = st.number_input("Jumlah Baru", value=barang.jumlah, min_value=1)
+                kategori_baru = st.selectbox(
+                    "Kategori Baru", 
+                    ["Primer", "Sekunder", "Tersier"],
+                    index=["Primer", "Sekunder", "Tersier"].index(barang.kategori)
+                )
+                
+                if st.form_submit_button("Simpan Perubahan"):
+                    st.session_state.data_barang[index].nama = nama_baru
+                    st.session_state.data_barang[index].harga = harga_baru
+                    st.session_state.data_barang[index].jumlah = jumlah_baru
+                    st.session_state.data_barang[index].kategori = kategori_baru
+                    st.success("Data barang berhasil diperbarui!")
+    else:
+        st.info("Belum ada barang dalam daftar.")
 
