@@ -120,3 +120,27 @@ elif menu == "4":
     else:
         st.info("Belum ada barang dalam daftar.")
 
+elif menu == "5":
+    st.subheader("🗑️ Hapus Barang")
+    if st.session_state.data_barang:
+        pilihan = st.multiselect(
+            "Pilih barang yang akan dihapus",
+            [f"{i+1}. {b.nama}" for i, b in enumerate(st.session_state.data_barang)],
+            key='hapus_select'
+        )
+        
+        if pilihan and st.button("Hapus Barang Terpilih"):
+            # Urutkan indeks dari besar ke kecil untuk menghindari masalah saat penghapusan
+            indices_to_delete = sorted([int(item.split('.')[0])-1 for item in pilihan], reverse=True)
+            
+            for index in indices_to_delete:
+                if 0 <= index < len(st.session_state.data_barang):
+                    del st.session_state.data_barang[index]
+            
+            st.success(f"{len(indices_to_delete)} barang berhasil dihapus!")
+    else:
+        st.info("Belum ada barang dalam daftar.")
+
+elif menu != "":
+    st.warning("Masukkan angka 1 - 5 sesuai menu.")
+
