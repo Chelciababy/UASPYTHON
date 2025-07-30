@@ -21,3 +21,24 @@ if 'data_barang' not in st.session_state:
 def hitung_total():
     total = sum(b.harga * b.jumlah for b in st.session_state.data_barang)
     return f"Rp{total:,}"
+
+# Tampilan utama
+st.title("🛒 Aplikasi Daftar Belanja Sederhana")
+
+# Kolom untuk menu dan info total
+col1, col2 = st.columns([3, 1])
+with col1:
+    st.write("### 📋 Menu:")
+with col2:
+    st.metric("Total Belanja", hitung_total())
+
+# Menu pilihan
+st.write("1. Lihat Daftar Barang")
+st.write("2. Tambah Barang")
+st.write("3. Tandai Barang Sudah Dibeli")
+st.write("4. Edit Barang")
+st.write("5. Hapus Barang")
+
+menu = st.text_input("Masukkan angka menu (1-5):")
+
+
