@@ -41,4 +41,24 @@ st.write("5. Hapus Barang")
 
 menu = st.text_input("Masukkan angka menu (1-5):")
 
+# Fungsi menu
+if menu == "1":
+    st.subheader("📄 Daftar Barang")
+    if st.session_state.data_barang:
+        for i, barang in enumerate(st.session_state.data_barang):
+            st.write(f"{i+1}. {barang}")
+    else:
+        st.info("Belum ada barang dalam daftar.")
+        
+elif menu == "2":
+    st.subheader("➕ Tambah Barang")
+    with st.form(key='tambah_barang'):
+        nama = st.text_input("Nama Barang")
+        col1, col2 = st.columns(2)
+        with col1:
+            harga = st.number_input("Harga", min_value=0, step=1000)
+        with col2:
+            jumlah = st.number_input("Jumlah", min_value=1)
+        kategori = st.selectbox("Kategori", ["Primer", "Sekunder", "Tersier"])
+
 
