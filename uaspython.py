@@ -60,6 +60,7 @@ elif menu == "2":
         with col2:
             jumlah = st.number_input("Jumlah", min_value=1)
         kategori = st.selectbox("Kategori", ["Primer", "Sekunder", "Tersier"])
+        
         if st.form_submit_button("Simpan Barang"):
             if nama and harga > 0 and jumlah > 0:
                 barang = Barang(nama, harga, jumlah, kategori)
